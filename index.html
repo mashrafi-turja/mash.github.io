@@ -147,6 +147,11 @@
   }
   @media(min-width:860px){.hero-photo{justify-self:end;}}
   .hero-photo .plus{font-size:28px; color:var(--cyan);}
+  .hero-photo.hero-photo-empty{
+    border-style:solid; border-color:var(--line);
+    background:linear-gradient(135deg, var(--ink), var(--cyan-dim));
+  }
+  .hero-initials{font-family:'Barlow Condensed', sans-serif; font-size:64px; font-weight:700; color:#fff; letter-spacing:1px;}
 
   .stat-strip{
     display:grid; grid-template-columns:repeat(2,1fr);
@@ -381,8 +386,7 @@
         বসিয়ে দাও।
       -->
       <div class="hero-photo" id="heroPhoto">
-        <div class="plus">+</div>
-        <div>তোমার প্রোফাইল ছবি<br/>এখানে যোগ করো</div>
+        <div class="hero-initials">MT</div>
       </div>
     </div>
 
@@ -786,10 +790,13 @@ function renderPortfolio(data){
   const photoBox = document.getElementById('heroPhoto');
   if(photoBox){
     if(data.heroPhoto){
+      photoBox.classList.remove('hero-photo-empty');
       photoBox.innerHTML = `<img src="${escapeHtml(data.heroPhoto)}" alt="${escapeHtml(data.fullName)}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">`;
       photoBox.style.border = "none";
     } else {
-      photoBox.innerHTML = `<div class="plus">+</div><div>তোমার প্রোফাইল ছবি<br/>এখানে যোগ করো</div>`;
+      const initials = (data.fullName || "").trim().split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('') || "—";
+      photoBox.classList.add('hero-photo-empty');
+      photoBox.innerHTML = `<div class="hero-initials">${escapeHtml(initials)}</div>`;
     }
   }
 
@@ -803,8 +810,10 @@ function renderPortfolio(data){
 
   // Certifications
   const certGrid = document.getElementById('certGrid');
+  const certSection = document.getElementById('certifications');
   if(certGrid){
     const list = (data.certifications || []);
+    if(certSection) certSection.style.display = list.length ? "" : "none";
     certGrid.innerHTML = list.map(c => `
       <div class="card cert-card">
         <div class="cert-icon">${escapeHtml(c.icon || "•")}</div>
@@ -814,22 +823,14 @@ function renderPortfolio(data){
           <span class="status-pill ${c.status === 'done' ? 'status-done' : 'status-progress'}">${c.status === 'done' ? 'Completed' : 'In Progress'}</span>
         </div>
       </div>
-    `).join('') + `
-      <div class="card cert-card" style="border-style:dashed;">
-        <div class="cert-icon" style="background:transparent; color:var(--text-dim); border:1px dashed #C7CCD8;">+</div>
-        <div>
-          <h3 style="color:var(--text-dim); font-weight:600;">নতুন সার্টিফিকেশন যোগ করো</h3>
-          <div class="meta">/admin থেকে যোগ করো</div>
-        </div>
-      </div>
-    `;
+    `).join('');
   }
 
   // Research certifications
   const rcGrid = document.getElementById('researchCertGrid');
   if(rcGrid){
     const list = (data.researchCertifications || []);
-    let html = list.map(c => `
+    rcGrid.innerHTML = list.map(c => `
       <div class="card cert-card">
         <div class="cert-icon">${escapeHtml(c.icon || "•")}</div>
         <div>
@@ -839,16 +840,6 @@ function renderPortfolio(data){
         </div>
       </div>
     `).join('');
-    html += `
-      <div class="card cert-card" style="border-style:dashed;">
-        <div class="cert-icon" style="background:transparent; color:var(--text-dim); border:1px dashed #C7CCD8;">+</div>
-        <div>
-          <h3 style="color:var(--text-dim); font-weight:600;">রিসার্চ-সম্পর্কিত সার্টিফিকেশন যোগ করো</h3>
-          <div class="meta">/admin থেকে যোগ করো — Machine Learning, Cybersecurity, ইত্যাদি</div>
-        </div>
-      </div>
-    `;
-    rcGrid.innerHTML = html;
   }
 
   // Achievements
@@ -866,16 +857,13 @@ function renderPortfolio(data){
 
   // Gallery
   const gal = document.getElementById('galleryGrid');
+  const gallerySection = document.getElementById('gallery');
   if(gal){
     const list = (data.gallery || []);
-    let html = list.map(g => `
+    if(gallerySection) gallerySection.style.display = list.length ? "" : "none";
+    gal.innerHTML = list.map(g => `
       <div class="g-item"><img src="${escapeHtml(g.image)}" alt="${escapeHtml(g.caption || '')}"></div>
     `).join('');
-    const remaining = Math.max(0, 6 - list.length);
-    for(let i=0; i<remaining; i++){
-      html += `<div class="g-item">+ ছবি<br/>এখানে যোগ করো</div>`;
-    }
-    gal.innerHTML = html;
   }
 }
 
