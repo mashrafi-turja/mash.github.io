@@ -1,0 +1,95 @@
+# ============================================================
+# Sveltia CMS কনফিগারেশন — এখানে "repo" এর জায়গায় তোমার নিজের
+# GitHub username বসাও (২ জায়গায় বদলাতে হবে না, একটাই লাইন)
+# উদাহরণ: repo: "turja123/turja123.github.io"
+# ============================================================
+backend:
+  name: github
+  repo: "YOUR-GITHUB-USERNAME/YOUR-GITHUB-USERNAME.github.io"
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "portfolio"
+    label: "Portfolio"
+    files:
+      - name: "main"
+        label: "Main Content"
+        file: "data.json"
+        format: "json"
+        fields:
+          - { label: "Full Name (Navbar + Title)", name: "fullName", widget: "string" }
+          - { label: "Hero Name — Line 1", name: "heroNameLine1", widget: "string" }
+          - { label: "Hero Name — Line 2", name: "heroNameLine2", widget: "string", required: false }
+          - { label: "Tagline", name: "tagline", widget: "text" }
+          - { label: "Profile Photo", name: "heroPhoto", widget: "image", required: false, hint: "তোমার প্রোফাইল ছবি — Hero সেকশনে দেখাবে" }
+
+          - label: "Stats (Hero strip)"
+            name: "stats"
+            widget: "list"
+            summary: "{{fields.num}} — {{fields.label}}"
+            fields:
+              - { label: "Number", name: "num", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+
+          - label: "Certifications"
+            name: "certifications"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Short Code (2 letters, e.g. HP)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Organization", name: "org", widget: "string" }
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options:
+                  - { label: "In Progress", value: "progress" }
+                  - { label: "Completed", value: "done" }
+
+          - label: "Research Certifications"
+            name: "researchCertifications"
+            widget: "list"
+            required: false
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Short Code (2 letters)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Organization", name: "org", widget: "string" }
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options:
+                  - { label: "In Progress", value: "progress" }
+                  - { label: "Completed", value: "done" }
+
+          - label: "Achievements & Extracurricular"
+            name: "achievements"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Date / Year", name: "date", widget: "string" }
+
+          - label: "Gallery Photos"
+            name: "gallery"
+            widget: "list"
+            summary: "{{fields.caption}}"
+            fields:
+              - { label: "Photo", name: "image", widget: "image" }
+              - { label: "Caption (optional)", name: "caption", widget: "string", required: false }
+
+# ============================================================
+# ঐচ্ছিক (Optional): যদি ভবিষ্যতে সুন্দর "Login with GitHub" বাটন
+# চাও (টোকেন পেস্ট করার বদলে), Cloudflare Worker OAuth proxy বসিয়ে
+# এখানে base_url যোগ করতে পারো:
+#
+# backend:
+#   name: github
+#   repo: "YOUR-GITHUB-USERNAME/YOUR-GITHUB-USERNAME.github.io"
+#   branch: main
+#   base_url: "https://your-worker-name.YOUR-SUBDOMAIN.workers.dev"
+# ============================================================

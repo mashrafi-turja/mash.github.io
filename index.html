@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mashrafi Tasnim Turja — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===========================================================
+     DESIGN TOKENS
+  =========================================================== */
+  :root{
+    --ink:#10131C;
+    --ink-soft:#1A1F2E;
+    --paper:#F4F5F7;
+    --paper-card:#FFFFFF;
+    --cyan:#2FD9C4;
+    --cyan-dim:#1FA492;
+    --amber:#F2B705;
+    --line:#26314A;
+    --text-dim:#8B93A7;
+    --text-body:#3A4256;
+    --radius:10px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--text-body);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{
+    font-family:'Barlow Condensed', sans-serif;
+    color:var(--ink);
+    font-weight:700;
+    letter-spacing:0.01em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  section{padding:88px 0;}
+  .section-label{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--cyan-dim);
+    margin-bottom:10px;
+  }
+  .section-head{margin-bottom:44px; max-width:640px;}
+  .section-head h2{font-size:38px; line-height:1.05; margin-bottom:10px;}
+  .section-head p{color:var(--text-dim); font-size:16px;}
+
+  /* ===========================================================
+     NAV
+  =========================================================== */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(16,19,28,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700; font-size:18px; color:#fff;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    max-width:190px;
+  }
+  @media(min-width:480px){.brand{font-size:20px; max-width:none;}}
+  .brand span{color:var(--cyan);}
+  .navlinks{display:none; gap:28px;}
+  .navlinks a{
+    color:#B7BECF; font-size:14.5px; font-weight:500;
+    transition:color .15s ease;
+  }
+  .navlinks a:hover{color:var(--cyan);}
+  @media(min-width:860px){.navlinks{display:flex;}}
+
+  /* Mobile hamburger */
+  .navtoggle{
+    display:flex; flex-direction:column; gap:5px; background:none; border:none;
+    cursor:pointer; padding:8px;
+  }
+  @media(min-width:860px){.navtoggle{display:none;}}
+  .navtoggle span{width:22px; height:2px; background:#fff; display:block;}
+  .navmobile{
+    display:none; flex-direction:column;
+    background:var(--ink-soft); border-bottom:1px solid var(--line);
+  }
+  .navmobile.open{display:flex;}
+  .navmobile a{
+    color:#C7CDDC; font-size:15px; font-weight:500; padding:14px 28px;
+    border-top:1px solid var(--line);
+  }
+  @media(min-width:860px){.navmobile{display:none !important;}}
+
+  /* ===========================================================
+     HERO
+  =========================================================== */
+  .hero{
+    background:
+      radial-gradient(circle at 85% -10%, rgba(47,217,196,0.16), transparent 45%),
+      var(--ink);
+    color:#fff;
+    padding:96px 0 0 0;
+    position:relative;
+  }
+  .hero-inner{
+    display:grid; grid-template-columns:1fr; gap:36px;
+    padding-bottom:60px;
+  }
+  @media(min-width:860px){
+    .hero-inner{grid-template-columns:1.3fr 0.9fr; align-items:end;}
+  }
+  .hero-eyebrow{
+    color:var(--cyan); font-size:15px; font-weight:600;
+    font-family:'Barlow Condensed', sans-serif;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(46px, 8vw, 84px);
+    line-height:0.96;
+    color:#fff;
+  }
+  .hero .role{
+    font-size:clamp(18px, 2.4vw, 24px);
+    color:#C7CDDC;
+    font-family:'Inter', sans-serif;
+    font-weight:500;
+    margin-top:18px;
+    max-width:520px;
+  }
+  .hero-photo{
+    width:200px; height:200px; border-radius:14px;
+    background:var(--ink-soft);
+    border:1px dashed #3B4560;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:var(--text-dim); font-size:13px; text-align:center; gap:8px;
+    justify-self:start;
+  }
+  @media(min-width:860px){.hero-photo{justify-self:end;}}
+  .hero-photo .plus{font-size:28px; color:var(--cyan);}
+
+  .stat-strip{
+    display:grid; grid-template-columns:repeat(2,1fr);
+    border-top:1px solid var(--line);
+  }
+  @media(min-width:640px){.stat-strip{grid-template-columns:repeat(4,1fr);}}
+  .stat{
+    padding:26px 28px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:44px; font-weight:700; color:var(--cyan);
+    line-height:1;
+  }
+  .stat .lbl{font-size:13.5px; color:var(--text-dim); margin-top:6px;}
+
+  /* ===========================================================
+     BUTTONS
+  =========================================================== */
+  .btnrow{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .btn{
+    padding:13px 22px; border-radius:8px; font-weight:600; font-size:14.5px;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{background:var(--cyan); color:var(--ink);}
+  .btn-ghost{border:1px solid #3B4560; color:#fff;}
+
+  /* ===========================================================
+     ABOUT
+  =========================================================== */
+  .about-grid{
+    display:grid; grid-template-columns:1fr; gap:40px;
+  }
+  @media(min-width:800px){.about-grid{grid-template-columns:1.4fr 1fr;}}
+  .about-text p{font-size:16.5px; color:var(--text-body); margin-bottom:16px;}
+  .skill-block{margin-bottom:22px;}
+  .skill-block h4{font-size:14px; color:var(--ink); font-family:'Inter'; font-weight:700; margin-bottom:10px; text-transform:none;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    background:var(--paper-card); border:1px solid #E3E6EC;
+    padding:6px 12px; border-radius:20px; font-size:13.5px; color:var(--text-body);
+  }
+
+  /* ===========================================================
+     TIMELINE (EXPERIENCE)
+  =========================================================== */
+  .timeline{position:relative; padding-left:26px;}
+  .timeline::before{
+    content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px;
+    background:#DCE0E8;
+  }
+  .tl-item{position:relative; padding-bottom:40px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-dot{
+    position:absolute; left:-26px; top:4px; width:14px; height:14px; border-radius:50%;
+    background:var(--cyan); border:3px solid var(--paper);
+    box-shadow:0 0 0 2px var(--cyan);
+  }
+  .tl-card{
+    background:var(--paper-card); border:1px solid #E3E6EC; border-radius:var(--radius);
+    padding:24px 26px;
+  }
+  .tl-top{
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;
+    margin-bottom:6px;
+  }
+  .tl-top h3{font-size:22px; color:var(--ink);}
+  .tl-date{
+    font-size:13px; font-weight:600; color:var(--cyan-dim);
+    font-family:'Barlow Condensed'; white-space:nowrap;
+  }
+  .tl-org{font-size:14.5px; color:var(--text-dim); margin-bottom:12px; font-weight:500;}
+  .tl-card ul{padding-left:18px; font-size:15px; color:var(--text-body);}
+  .tl-card li{margin-bottom:6px;}
+  .tag{
+    display:inline-block; font-size:11.5px; font-weight:600; color:var(--amber);
+    background:rgba(242,183,5,0.12); border:1px solid rgba(242,183,5,0.3);
+    padding:2px 9px; border-radius:20px; margin-left:8px; vertical-align:middle;
+  }
+
+  /* ===========================================================
+     CARD GRID (projects, publications, certs, achievements)
+  =========================================================== */
+  .grid{display:grid; grid-template-columns:1fr; gap:20px;}
+  @media(min-width:640px){.grid-2{grid-template-columns:1fr 1fr;}}
+  @media(min-width:860px){.grid-3{grid-template-columns:repeat(3,1fr);}}
+  .card{
+    background:var(--paper-card); border:1px solid #E3E6EC; border-radius:var(--radius);
+    padding:26px;
+  }
+  .card h3{font-size:21px; margin-bottom:8px; color:var(--ink);}
+  .card p{font-size:14.5px; color:var(--text-body); margin-bottom:14px;}
+  .card .meta{font-size:13px; color:var(--text-dim); font-weight:500;}
+  .card a.link{color:var(--cyan-dim); font-weight:600; font-size:14px;}
+
+  .pub-item{
+    border-left:3px solid var(--cyan);
+    padding:4px 0 4px 18px; margin-bottom:22px;
+  }
+  .pub-item:last-child{margin-bottom:0;}
+  .pub-item h3{font-size:18px; margin-bottom:4px;}
+  .pub-item .meta{font-size:13.5px; color:var(--text-dim);}
+
+  .cert-card{display:flex; gap:16px; align-items:flex-start;}
+  .cert-icon{
+    width:44px; height:44px; border-radius:8px; background:var(--ink);
+    color:var(--cyan); display:flex; align-items:center; justify-content:center;
+    font-family:'Barlow Condensed'; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .cert-card h3{font-size:17px; margin-bottom:3px;}
+  .cert-card .meta{font-size:13px;}
+  .status-pill{
+    display:inline-block; font-size:11px; font-weight:700; padding:2px 9px;
+    border-radius:20px; margin-top:8px;
+  }
+  .status-progress{background:rgba(47,217,196,0.12); color:var(--cyan-dim);}
+  .status-done{background:rgba(50,180,90,0.12); color:#2E9E52;}
+
+  /* ===========================================================
+     GALLERY
+  =========================================================== */
+  .gallery{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  @media(min-width:640px){.gallery{grid-template-columns:repeat(3,1fr);}}
+  .g-item{
+    aspect-ratio:1/1; border-radius:var(--radius); overflow:hidden;
+    background:var(--paper-card); border:1px dashed #C7CCD8;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-dim); font-size:13px; text-align:center; padding:14px;
+  }
+  .g-item img{width:100%; height:100%; object-fit:cover;}
+
+  /* ===========================================================
+     DARK SECTION (Experience wrapper background alt)
+  =========================================================== */
+  .alt{background:var(--paper);}
+  .dark{background:var(--ink); color:#fff;}
+  .dark .section-head h2, .dark h2{color:#fff;}
+  .dark .section-head p{color:#9BA3B7;}
+
+  /* ===========================================================
+     FOOTER
+  =========================================================== */
+  footer{
+    background:var(--ink); color:#8B93A7; padding:44px 0; text-align:center;
+    font-size:14px; border-top:1px solid var(--line);
+  }
+  footer a{color:var(--cyan);}
+
+  /* Editable-note badge shown only in placeholder cards */
+  .editnote{
+    font-size:12px; color:var(--text-dim); font-style:italic; margin-top:6px;
+  }
+
+  /* ===========================================================
+     MOBILE OPTIMIZATION
+  =========================================================== */
+  @media(max-width:640px){
+    .wrap{padding:0 18px;}
+    section{padding:56px 0;}
+    .hero{padding-top:32px;}
+    .hero-inner{gap:24px; padding-bottom:36px;}
+    .section-head h2{font-size:28px;}
+    .btnrow{flex-direction:column; align-items:stretch;}
+    .btn{justify-content:center; text-align:center;}
+    .hero-photo{width:140px; height:140px;}
+    .stat{padding:20px 18px;}
+    .stat .num{font-size:34px;}
+    nav .wrap{height:58px;}
+    .tl-card{padding:20px 18px;}
+    .gallery{grid-template-columns:repeat(2,1fr); gap:10px;}
+  }
+  /* Larger tap targets on touch devices */
+  @media(hover:none){
+    .navlinks a, .navmobile a, .btn{padding-top:12px; padding-bottom:12px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================== -->
+<nav>
+  <div class="wrap">
+    <div class="brand" id="navFullName">Mashrafi Tasnim Turja</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="navtoggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="navmobile" id="navMobile">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     HERO
+========================================================== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">PROJECT MANAGEMENT · OPERATIONS · ESPORTS · TECHNOLOGY</div>
+        <h1 id="heroName">Mashrafi Tasnim<br/>Turja</h1>
+        <p class="role" id="heroTagline">Project Manager specializing in large-scale tournament operations, team leadership, and technical delivery — with a research background in cybersecurity and machine learning.</p>
+        <div class="btnrow">
+          <a class="btn btn-primary" href="#contact">Get in touch</a>
+          <a class="btn btn-ghost" href="#experience">See my work</a>
+        </div>
+      </div>
+      <!--
+        এই ছবিটা এখন CMS (/admin) থেকে নিয়ন্ত্রিত হয় — data.json এর
+        "heroPhoto" ফিল্ড বদলালেই এখানে ছবি বসে যাবে। ম্যানুয়ালি বদলাতে
+        চাইলে নিচের id="heroPhoto" div টার ভেতরে <img src="images/তোমার_ছবি.jpg">
+        বসিয়ে দাও।
+      -->
+      <div class="hero-photo" id="heroPhoto">
+        <div class="plus">+</div>
+        <div>তোমার প্রোফাইল ছবি<br/>এখানে যোগ করো</div>
+      </div>
+    </div>
+
+    <div class="stat-strip" id="statGrid">
+      <div class="stat"><div class="num">6+</div><div class="lbl">Years of Experience</div></div>
+      <div class="stat"><div class="num">7,000+</div><div class="lbl">Teams Managed Across Events</div></div>
+      <div class="stat"><div class="num">10+</div><div class="lbl">Tournaments &amp; LAN Events Led</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">Co-Authored Publications</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     ABOUT
+========================================================== -->
+<section id="about" class="alt">
+  <div class="wrap">
+    <div class="section-label">ABOUT</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 style="font-size:32px; margin-bottom:18px;">A project manager who builds the systems, not just runs them</h2>
+        <p>I'm a results-driven Project Manager with 6+ years of experience across project management, operations, esports, team management, event coordination, and technology-driven projects. I've planned and executed tournaments ranging from 19 teams to over 3,000, coordinating stakeholders, resolving operational challenges under pressure, and delivering from planning through completion.</p>
+        <p>Alongside operational work, I hold a Bachelor of Science in Computer Science and Engineering, have hands-on experience developing and deploying web-based platforms, and co-authored research publications in cybersecurity and machine learning — a combination that lets me bring technical rigor to operational problems.</p>
+      </div>
+      <div>
+        <div class="skill-block">
+          <h4>Project &amp; Operations</h4>
+          <div class="chips">
+            <span class="chip">Project Planning &amp; Execution</span>
+            <span class="chip">Operations Management</span>
+            <span class="chip">Event Management</span>
+            <span class="chip">Stakeholder Coordination</span>
+            <span class="chip">Team Leadership</span>
+            <span class="chip">Risk Management</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <h4>Technical</h4>
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">HTML/CSS</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">Google Apps Script</span>
+            <span class="chip">GitHub</span>
+            <span class="chip">Linux</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <h4>Tools &amp; Design</h4>
+          <div class="chips">
+            <span class="chip">Google Colab</span>
+            <span class="chip">Microsoft Office</span>
+            <span class="chip">OBS</span>
+            <span class="chip">Adobe Illustrator</span>
+            <span class="chip">Adobe Photoshop</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     EXPERIENCE TIMELINE
+========================================================== -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">EXPERIENCE</div>
+      <h2>Where I've delivered</h2>
+      <p>From full-time operations work to freelance tournament leadership across Bangladesh's PUBG Mobile esports ecosystem.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>Junior Executive (Project Manager)</h3>
+            <div class="tl-date">Feb 2026 — Present</div>
+          </div>
+          <div class="tl-org">XIKZA</div>
+          <ul>
+            <li>Project Manager for PUBG Mobile Community League 2026 (Season 1 &amp; 2) — scaled from 142 to 287 teams across two seasons.</li>
+            <li>Integrated an Esports Management System to automate tournament operations.</li>
+            <li>Assistant Project Manager for PUBG Mobile Present Bondhu Adda — Season 2.</li>
+            <li>Coordinate team support and deliver post-event reports across concurrent projects.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>In Charge — Networking &amp; Connectivity <span class="tag">Freelance</span></h3>
+            <div class="tl-date">2026</div>
+          </div>
+          <div class="tl-org">Goat Esports — PMCC / PMNC Bangladesh Fall LAN Events</div>
+          <ul>
+            <li>Managed connectivity and device-distribution operations for events totaling 3,500+ teams.</li>
+            <li>Achieved zero connectivity issues at a 500-team LAN event.</li>
+            <li>Rapidly diagnosed and resolved live connectivity issues during events.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>Project Manager &amp; In Charge <span class="tag">Freelance</span></h3>
+            <div class="tl-date">2025</div>
+          </div>
+          <div class="tl-org">PUBG Mobile Zenos National Challenge / NBL Summer Clash</div>
+          <ul>
+            <li>Planned and led two large-scale tournaments totaling 900+ participating teams.</li>
+            <li>Assigned responsibilities and resolved operational challenges in real time.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>Project Manager / Advisor <span class="tag">Freelance</span></h3>
+            <div class="tl-date">2021 — 2025</div>
+          </div>
+          <div class="tl-org">Additional Tournament &amp; Event Management Roles</div>
+          <ul>
+            <li>OPPO Esports LAN Event, Zenos Invitational Series, and others — spanning 19 to 560+ teams per event.</li>
+            <li>Provided project roadmaps and stakeholder coordination across online and international events.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>Team Manager</h3>
+            <div class="tl-date">2020 — 2026</div>
+          </div>
+          <div class="tl-org">Inertia Esports · Gremlin Storm · Predator Xtreme Esports · Wolves Den Esports</div>
+          <ul>
+            <li>Managed team operations, player coordination, and competitive participation across four esports teams.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PROJECTS
+========================================================== -->
+<section id="projects" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">PROJECTS</div>
+      <h2>Things I've built</h2>
+      <p>Technical projects where I served as both project manager and developer.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Esports Management System</h3>
+        <p>A web-based platform for tournament creation, team management, fixtures, and results — built to reduce manual operational work through automation.</p>
+        <div class="meta">JavaScript · Google Apps Script API</div>
+        <br/>
+        <a class="link" href="https://www.esports-bd.site" target="_blank" rel="noopener">esports-bd.site →</a>
+      </div>
+      <div class="card">
+        <h3>Invoice Hub Beta</h3>
+        <p>A web-based invoicing platform for freelancers and small businesses, with link-based invoice sharing for fast client communication.</p>
+        <div class="meta">Node.js · Vercel · Neon</div>
+        <br/>
+        <a class="link" href="https://invoicehub-beta.vercel.app" target="_blank" rel="noopener">invoicehub-beta.vercel.app →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     RESEARCH & PUBLICATIONS
+========================================================== -->
+<section id="research">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">RESEARCH &amp; PUBLICATIONS</div>
+      <h2>Published work</h2>
+    </div>
+    <div class="pub-item">
+      <h3>Forensic Analysis of Anti-Forensic Techniques in Modern Operating Systems</h3>
+      <div class="meta">Co-Author · ICIPCN 2026, Nepal · DOI: 10.1109/ICIPCN67432.2026.11438785</div>
+    </div>
+    <div class="pub-item">
+      <h3>A Comparative Machine Learning Approach for Multi-Class Cyber Attack Classification</h3>
+      <div class="meta">Co-Author · IEEE QPAIN 2026 · DOI: 10.1109/QPAIN69676.2026.11546059</div>
+    </div>
+    <div class="pub-item">
+      <h3>Identifying Malicious and Benign Prompts in AI Agent Evasion Attacks Using Machine Learning</h3>
+      <div class="meta">Co-Author · IEEE QPAIN 2026 · DOI: 10.1109/QPAIN69676.2026.11546222</div>
+    </div>
+
+    <!-- এই অংশ এখন /admin CMS থেকে নিয়ন্ত্রিত — data.json এর "researchCertifications" -->
+    <div class="grid grid-2" id="researchCertGrid" style="margin-top:24px;"></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     ACHIEVEMENTS & EXTRACURRICULAR
+     ======= কিভাবে নতুন Achievement/Activity যোগ করবে =======
+     নিচে <div class="grid grid-3"> এর ভেতরে যেকোনো একটা .card ব্লক
+     কপি করে পেস্ট করো, তারপর টাইটেল, ডেসক্রিপশন আর তারিখ বদলে দাও।
+     প্যাটার্নটা এরকম:
+
+     <div class="card">
+       <h3>তোমার অ্যাচিভমেন্টের নাম</h3>
+       <p>এক-দুই লাইনে বর্ণনা লেখো।</p>
+       <div class="meta">তারিখ / সাল</div>
+     </div>
+========================================================== -->
+<section id="achievements" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">ACHIEVEMENTS &amp; EXTRACURRICULAR</div>
+      <h2>Beyond the job title</h2>
+      <p>Additional roles, creative work, and competitive background.</p>
+    </div>
+    <!-- এই অংশ এখন /admin CMS থেকে নিয়ন্ত্রিত — data.json এর "achievements" -->
+    <div class="grid grid-3" id="achievementGrid"></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CERTIFICATIONS
+     ======= কিভাবে নতুন Certification যোগ করবে =======
+     নিচে যেকোনো একটা .cert-card ব্লক কপি করো এবং:
+     - cert-icon এর ভেতরের অক্ষর বদলাও (২ অক্ষরের শর্টফর্ম)
+     - h3 এ সার্টিফিকেটের নাম দাও
+     - .meta তে প্রতিষ্ঠানের নাম দাও
+     - status-pill এ "status-done" (সম্পন্ন) বা "status-progress" (চলমান) ব্যবহার করো
+========================================================== -->
+<section id="certifications">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">CERTIFICATIONS &amp; TRAINING</div>
+      <h2>Continued learning</h2>
+    </div>
+    <!-- এই অংশ এখন /admin CMS থেকে নিয়ন্ত্রিত — data.json এর "certifications" -->
+    <div class="grid grid-2" id="certGrid"></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     GALLERY
+     ======= কিভাবে ছবি যোগ করবে =======
+     ১) তোমার ছবিগুলো (jpg/png) এই index.html ফাইলের সাথে একই ফোল্ডারে
+        রাখো, অথবা একটা "images" নামে ফোল্ডার বানিয়ে তার ভেতরে রাখো।
+     ২) নিচের প্রতিটা <div class="g-item">...</div> কে বদলে দাও এভাবে:
+        <div class="g-item"><img src="images/photo1.jpg" alt="বর্ণনা"></div>
+     ৩) আরও ছবি যোগ করতে চাইলে পুরো <div class="g-item">...</div> ব্লক
+        কপি করে নিচে পেস্ট করো এবং নতুন ছবির নাম বসাও।
+========================================================== -->
+<section id="gallery" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">GALLERY</div>
+      <h2>Moments from the field</h2>
+      <p>LAN events, tournaments, and team moments — add your photos below.</p>
+    </div>
+    <!-- এই অংশ এখন /admin CMS থেকে নিয়ন্ত্রিত — data.json এর "gallery" -->
+    <div class="gallery" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     EDUCATION
+========================================================== -->
+<section id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">EDUCATION</div>
+      <h2>Academic background</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>B.Sc. in Computer Science and Engineering</h3>
+            <div class="tl-date">2022 — 2026</div>
+          </div>
+          <div class="tl-org">Daffodil International University · CGPA 3.32/4.00</div>
+          <p style="font-size:15px;">Thesis: RTSnet26 — A Custom Convolutional Neural Network with Integrated Explainable AI for Multi-Class Classification of Six Ocular Diseases from Color Fundus Images.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>Higher Secondary Certificate (HSC)</h3>
+            <div class="tl-date">2019 — 2020</div>
+          </div>
+          <div class="tl-org">Ananda Mohan College · GPA 5.00/5.00</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <h3>Secondary School Certificate (SSC)</h3>
+            <div class="tl-date">2017 — 2018</div>
+          </div>
+          <div class="tl-org">Mymensingh Zilla School · GPA 5.00/5.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CONTACT
+========================================================== -->
+<section id="contact" class="dark">
+  <div class="wrap">
+    <div class="section-label">CONTACT</div>
+    <h2 style="font-size:40px; margin-bottom:16px;">Let's work together</h2>
+    <p style="color:#9BA3B7; max-width:520px; margin-bottom:30px; font-size:16px;">Open to project management, operations, and esports opportunities. Reach out directly below.</p>
+    <div class="btnrow">
+      <a class="btn btn-primary" href="mailto:mashturja4816@gmail.com">mashturja4816@gmail.com</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/mashrafi-tasnim-turja/" target="_blank" rel="noopener">LinkedIn Profile</a>
+      <a class="btn btn-ghost" href="tel:+8801842609370">+880 1842 609370</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    © 2026 Mashrafi Tasnim Turja · Dhaka, Bangladesh
+  </div>
+</footer>
+
+<script>
+/* =============================================================
+   PORTFOLIO DATA LOADER
+   এই স্ক্রিপ্ট data.json থেকে কনটেন্ট পড়ে পেজে বসায়।
+   /admin (Sveltia CMS) থেকে data.json বদলালে এখানে অটোমেটিক প্রতিফলিত হবে।
+   লোকাল ফাইল হিসেবে সরাসরি খুললে (file://) ব্রাউজার fetch ব্লক করতে
+   পারে — তখন নিচের DEFAULT_DATA ফলব্যাক হিসেবে দেখানো হয়।
+============================================================= */
+const DEFAULT_DATA = {
+  fullName: "Mashrafi Tasnim Turja",
+  heroNameLine1: "Mashrafi Tasnim",
+  heroNameLine2: "Turja",
+  tagline: "Project Manager specializing in large-scale tournament operations, team leadership, and technical delivery — with a research background in cybersecurity and machine learning.",
+  heroPhoto: "",
+  stats: [
+    { num: "6+", label: "Years of Experience" },
+    { num: "7,000+", label: "Teams Managed Across Events" },
+    { num: "10+", label: "Tournaments & LAN Events Led" },
+    { num: "3", label: "Co-Authored Publications" }
+  ],
+  certifications: [
+    { icon: "HP", title: "The What and How of Esports Management", org: "HP · edX", status: "progress" },
+    { icon: "SS", title: "Social Skills Training Programme", org: "Daffodil International University", status: "done" }
+  ],
+  researchCertifications: [],
+  achievements: [
+    { title: "Professional Handball Player", description: "Represented Mymensingh District Sports Association in professional-level handball competitions, building teamwork, discipline, and performance management skills.", date: "2016 — 2023" },
+    { title: "Creative Team Manager, CDSTF", description: "Managed and coordinated creative team activities for the Community Digital Storytelling Festival, supporting project planning and execution.", date: "May 2024 — Dec 2024" },
+    { title: "Graphic Designer, Draco Design", description: "Created graphic design materials and developed visual concepts for a sportswear brand using Adobe Illustrator and Photoshop.", date: "Oct 2024 — Aug 2025" }
+  ],
+  gallery: []
+};
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str == null ? "" : str;
+  return d.innerHTML;
+}
+
+function renderPortfolio(data){
+  // Nav + hero name
+  document.title = data.fullName + " — Portfolio";
+  const navName = document.getElementById('navFullName');
+  if(navName) navName.textContent = data.fullName;
+
+  const heroName = document.getElementById('heroName');
+  if(heroName){
+    const l1 = data.heroNameLine1 || data.fullName;
+    const l2 = data.heroNameLine2 || "";
+    heroName.innerHTML = escapeHtml(l1) + (l2 ? "<br/>" + escapeHtml(l2) : "");
+  }
+  const tagline = document.getElementById('heroTagline');
+  if(tagline) tagline.textContent = data.tagline || "";
+
+  // Hero photo
+  const photoBox = document.getElementById('heroPhoto');
+  if(photoBox){
+    if(data.heroPhoto){
+      photoBox.innerHTML = `<img src="${escapeHtml(data.heroPhoto)}" alt="${escapeHtml(data.fullName)}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">`;
+      photoBox.style.border = "none";
+    } else {
+      photoBox.innerHTML = `<div class="plus">+</div><div>তোমার প্রোফাইল ছবি<br/>এখানে যোগ করো</div>`;
+    }
+  }
+
+  // Stats
+  const statGrid = document.getElementById('statGrid');
+  if(statGrid && data.stats && data.stats.length){
+    statGrid.innerHTML = data.stats.map(s => `
+      <div class="stat"><div class="num">${escapeHtml(s.num)}</div><div class="lbl">${escapeHtml(s.label)}</div></div>
+    `).join('');
+  }
+
+  // Certifications
+  const certGrid = document.getElementById('certGrid');
+  if(certGrid){
+    const list = (data.certifications || []);
+    certGrid.innerHTML = list.map(c => `
+      <div class="card cert-card">
+        <div class="cert-icon">${escapeHtml(c.icon || "•")}</div>
+        <div>
+          <h3>${escapeHtml(c.title)}</h3>
+          <div class="meta">${escapeHtml(c.org || "")}</div>
+          <span class="status-pill ${c.status === 'done' ? 'status-done' : 'status-progress'}">${c.status === 'done' ? 'Completed' : 'In Progress'}</span>
+        </div>
+      </div>
+    `).join('') + `
+      <div class="card cert-card" style="border-style:dashed;">
+        <div class="cert-icon" style="background:transparent; color:var(--text-dim); border:1px dashed #C7CCD8;">+</div>
+        <div>
+          <h3 style="color:var(--text-dim); font-weight:600;">নতুন সার্টিফিকেশন যোগ করো</h3>
+          <div class="meta">/admin থেকে যোগ করো</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Research certifications
+  const rcGrid = document.getElementById('researchCertGrid');
+  if(rcGrid){
+    const list = (data.researchCertifications || []);
+    let html = list.map(c => `
+      <div class="card cert-card">
+        <div class="cert-icon">${escapeHtml(c.icon || "•")}</div>
+        <div>
+          <h3>${escapeHtml(c.title)}</h3>
+          <div class="meta">${escapeHtml(c.org || "")}</div>
+          <span class="status-pill ${c.status === 'done' ? 'status-done' : 'status-progress'}">${c.status === 'done' ? 'Completed' : 'In Progress'}</span>
+        </div>
+      </div>
+    `).join('');
+    html += `
+      <div class="card cert-card" style="border-style:dashed;">
+        <div class="cert-icon" style="background:transparent; color:var(--text-dim); border:1px dashed #C7CCD8;">+</div>
+        <div>
+          <h3 style="color:var(--text-dim); font-weight:600;">রিসার্চ-সম্পর্কিত সার্টিফিকেশন যোগ করো</h3>
+          <div class="meta">/admin থেকে যোগ করো — Machine Learning, Cybersecurity, ইত্যাদি</div>
+        </div>
+      </div>
+    `;
+    rcGrid.innerHTML = html;
+  }
+
+  // Achievements
+  const achGrid = document.getElementById('achievementGrid');
+  if(achGrid){
+    const list = (data.achievements || []);
+    achGrid.innerHTML = list.map(a => `
+      <div class="card">
+        <h3>${escapeHtml(a.title)}</h3>
+        <p>${escapeHtml(a.description)}</p>
+        <div class="meta">${escapeHtml(a.date || "")}</div>
+      </div>
+    `).join('');
+  }
+
+  // Gallery
+  const gal = document.getElementById('galleryGrid');
+  if(gal){
+    const list = (data.gallery || []);
+    let html = list.map(g => `
+      <div class="g-item"><img src="${escapeHtml(g.image)}" alt="${escapeHtml(g.caption || '')}"></div>
+    `).join('');
+    const remaining = Math.max(0, 6 - list.length);
+    for(let i=0; i<remaining; i++){
+      html += `<div class="g-item">+ ছবি<br/>এখানে যোগ করো</div>`;
+    }
+    gal.innerHTML = html;
+  }
+}
+
+// Try loading live data.json (works once hosted on http/https, e.g. GitHub Pages).
+// Falls back to DEFAULT_DATA if fetch fails (e.g. opened as a local file://).
+fetch('data.json', { cache: 'no-store' })
+  .then(res => { if(!res.ok) throw new Error('no data.json'); return res.json(); })
+  .then(data => renderPortfolio(data))
+  .catch(() => renderPortfolio(DEFAULT_DATA));
+
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const navMobile = document.getElementById('navMobile');
+if(navToggle && navMobile){
+  navToggle.addEventListener('click', () => navMobile.classList.toggle('open'));
+  navMobile.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navMobile.classList.remove('open'));
+  });
+}
+</script>
+
+</body>
+</html>
