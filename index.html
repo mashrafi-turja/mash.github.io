@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mashrafi Tasnim Turja — Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310131C'/%3E%3Ctext x='50%25' y='53%25' font-family='Arial, Helvetica, sans-serif' font-weight='700' font-size='34' fill='%232FD9C4' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -138,7 +139,7 @@
     max-width:520px;
   }
   .hero-photo{
-    width:200px; height:200px; border-radius:14px;
+    width:200px; height:240px; border-radius:14px;
     background:var(--ink-soft);
     border:1px dashed #3B4560;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -319,7 +320,7 @@
     .section-head h2{font-size:28px;}
     .btnrow{flex-direction:column; align-items:stretch;}
     .btn{justify-content:center; text-align:center;}
-    .hero-photo{width:140px; height:140px;}
+    .hero-photo{width:140px; height:168px;}
     .stat{padding:20px 18px;}
     .stat .num{font-size:34px;}
     nav .wrap{height:58px;}
@@ -791,7 +792,7 @@ function renderPortfolio(data){
   if(photoBox){
     if(data.heroPhoto){
       photoBox.classList.remove('hero-photo-empty');
-      photoBox.innerHTML = `<img src="${escapeHtml(data.heroPhoto)}" alt="${escapeHtml(data.fullName)}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">`;
+      photoBox.innerHTML = `<img src="${escapeHtml(data.heroPhoto)}" alt="${escapeHtml(data.fullName)}" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:14px;">`;
       photoBox.style.border = "none";
     } else {
       const initials = (data.fullName || "").trim().split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('') || "—";
