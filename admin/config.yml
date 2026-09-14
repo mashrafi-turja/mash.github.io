@@ -5,7 +5,7 @@
 # ============================================================
 backend:
   name: github
-  repo: "YOUR-GITHUB-USERNAME/YOUR-GITHUB-USERNAME.github.io"
+  repo: "https://github.com/mashrafi-turja/mash.github.io"
   branch: main
 
 media_folder: "images"
