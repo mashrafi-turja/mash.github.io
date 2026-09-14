@@ -39,7 +39,6 @@ collections:
             widget: "list"
             summary: "{{fields.title}}"
             fields:
-              - { label: "Short Code (2 letters, e.g. HP)", name: "icon", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Organization", name: "org", widget: "string" }
               - label: "Status"
@@ -48,6 +47,7 @@ collections:
                 options:
                   - { label: "In Progress", value: "progress" }
                   - { label: "Completed", value: "done" }
+              - { label: "Certificate (Image or PDF)", name: "certificate", widget: "file", required: false, hint: "আপলোড করলে ভিজিটর কার্ডে ক্লিক করে সার্টিফিকেট দেখতে পারবে। ফাঁকা রাখলে কার্ড ক্লিক করা যাবে না — এটা required না।" }
 
           - label: "Research Certifications"
             name: "researchCertifications"
@@ -55,7 +55,6 @@ collections:
             required: false
             summary: "{{fields.title}}"
             fields:
-              - { label: "Short Code (2 letters)", name: "icon", widget: "string" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Organization", name: "org", widget: "string" }
               - label: "Status"
@@ -64,6 +63,7 @@ collections:
                 options:
                   - { label: "In Progress", value: "progress" }
                   - { label: "Completed", value: "done" }
+              - { label: "Certificate (Image or PDF)", name: "certificate", widget: "file", required: false, hint: "আপলোড করলে ভিজিটর কার্ডে ক্লিক করে সার্টিফিকেট দেখতে পারবে। ফাঁকা রাখলে কার্ড ক্লিক করা যাবে না — এটা required না।" }
 
           - label: "Achievements & Extracurricular"
             name: "achievements"
@@ -81,5 +81,4 @@ collections:
             fields:
               - { label: "Photo", name: "image", widget: "image" }
               - { label: "Caption (optional)", name: "caption", widget: "string", required: false }
-
 
