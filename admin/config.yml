@@ -5,7 +5,7 @@
 # ============================================================
 backend:
   name: github
-  repo: "https://github.com/mashrafi-turja/mash.github.io"
+  repo: "mashrafi-turja/mashrafi-turja.github.io"
   branch: main
 
 media_folder: "images"
@@ -82,14 +82,4 @@ collections:
               - { label: "Photo", name: "image", widget: "image" }
               - { label: "Caption (optional)", name: "caption", widget: "string", required: false }
 
-# ============================================================
-# ঐচ্ছিক (Optional): যদি ভবিষ্যতে সুন্দর "Login with GitHub" বাটন
-# চাও (টোকেন পেস্ট করার বদলে), Cloudflare Worker OAuth proxy বসিয়ে
-# এখানে base_url যোগ করতে পারো:
-#
-# backend:
-#   name: github
-#   repo: "YOUR-GITHUB-USERNAME/YOUR-GITHUB-USERNAME.github.io"
-#   branch: main
-#   base_url: "https://your-worker-name.YOUR-SUBDOMAIN.workers.dev"
-# ============================================================
+
