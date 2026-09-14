@@ -259,12 +259,9 @@
   .pub-item h3{font-size:18px; margin-bottom:4px;}
   .pub-item .meta{font-size:13.5px; color:var(--text-dim);}
 
-  .cert-card{display:flex; gap:16px; align-items:flex-start;}
-  .cert-icon{
-    width:44px; height:44px; border-radius:8px; background:var(--ink);
-    color:var(--cyan); display:flex; align-items:center; justify-content:center;
-    font-family:'Barlow Condensed'; font-weight:700; font-size:18px; flex-shrink:0;
-  }
+  .cert-card{transition:border-color .15s, box-shadow .15s, transform .15s;}
+  .cert-card.clickable{cursor:pointer;}
+  .cert-card.clickable:hover{border-color:var(--cyan-dim); box-shadow:0 6px 18px rgba(31,164,146,0.14); transform:translateY(-2px);}
   .cert-card h3{font-size:17px; margin-bottom:3px;}
   .cert-card .meta{font-size:13px;}
   .status-pill{
@@ -273,6 +270,33 @@
   }
   .status-progress{background:rgba(47,217,196,0.12); color:var(--cyan-dim);}
   .status-done{background:rgba(50,180,90,0.12); color:#2E9E52;}
+  .cert-view{
+    display:flex; align-items:center; gap:6px; margin-top:10px;
+    font-size:12.5px; font-weight:600; color:var(--cyan-dim);
+  }
+
+  /* ===========================================================
+     CERTIFICATE MODAL
+  =========================================================== */
+  .cert-modal-overlay{
+    display:none; position:fixed; inset:0; z-index:999;
+    background:rgba(10,13,20,0.85); align-items:center; justify-content:center; padding:24px;
+  }
+  .cert-modal-overlay.active{display:flex;}
+  .cert-modal-box{
+    position:relative; width:100%; max-width:880px; max-height:88vh;
+    background:var(--paper-card); border-radius:12px; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cert-modal-box img, .cert-modal-box iframe{
+    display:block; width:100%; height:100%; max-height:88vh; border:0; object-fit:contain; background:#0B0E15;
+  }
+  .cert-modal-close{
+    position:absolute; top:10px; right:12px; width:34px; height:34px; border-radius:50%;
+    background:rgba(16,19,28,0.75); color:#fff; border:none; font-size:20px; line-height:1;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2;
+  }
+  .cert-modal-close:hover{background:var(--ink);}
 
   /* ===========================================================
      GALLERY
@@ -733,6 +757,14 @@
   </div>
 </footer>
 
+<!-- Certificate viewer (opens when a certification card with an uploaded certificate is clicked) -->
+<div class="cert-modal-overlay" id="certModalOverlay">
+  <div class="cert-modal-box">
+    <button class="cert-modal-close" id="certModalClose" aria-label="Close">&times;</button>
+    <div id="certModalContent" style="width:100%;height:100%;"></div>
+  </div>
+</div>
+
 <script>
 /* =============================================================
    PORTFOLIO DATA LOADER
@@ -754,8 +786,8 @@ const DEFAULT_DATA = {
     { num: "3", label: "Co-Authored Publications" }
   ],
   certifications: [
-    { icon: "HP", title: "The What and How of Esports Management", org: "HP · edX", status: "progress" },
-    { icon: "SS", title: "Social Skills Training Programme", org: "Daffodil International University", status: "done" }
+    { title: "The What and How of Esports Management", org: "HP · edX", status: "progress" },
+    { title: "Social Skills Training Programme", org: "Daffodil International University", status: "done" }
   ],
   researchCertifications: [],
   achievements: [
@@ -771,6 +803,58 @@ function escapeHtml(str){
   d.textContent = str == null ? "" : str;
   return d.innerHTML;
 }
+
+// Shared card markup for Certifications + Research Certifications.
+// No short-code/icon anymore. Card only becomes clickable when a
+// certificate file has been uploaded in /admin — otherwise it's a
+// plain, non-clickable card.
+function renderCertCard(c){
+  const hasCert = !!(c.certificate && String(c.certificate).trim());
+  return `
+    <div class="card cert-card${hasCert ? ' clickable' : ''}"${hasCert ? ` data-cert="${escapeHtml(c.certificate)}" role="button" tabindex="0"` : ''}>
+      <h3>${escapeHtml(c.title)}</h3>
+      <div class="meta">${escapeHtml(c.org || "")}</div>
+      <span class="status-pill ${c.status === 'done' ? 'status-done' : 'status-progress'}">${c.status === 'done' ? 'Completed' : 'In Progress'}</span>
+      ${hasCert ? '<div class="cert-view">📄 সার্টিফিকেট দেখতে ক্লিক করো</div>' : ''}
+    </div>
+  `;
+}
+
+function bindCertClicks(container){
+  container.querySelectorAll('.cert-card[data-cert]').forEach(el => {
+    el.addEventListener('click', () => openCertModal(el.getAttribute('data-cert')));
+    el.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openCertModal(el.getAttribute('data-cert')); }
+    });
+  });
+}
+
+function openCertModal(url){
+  if(!url) return;
+  const overlay = document.getElementById('certModalOverlay');
+  const content = document.getElementById('certModalContent');
+  if(!overlay || !content) return;
+  const isPdf = /\.pdf(\?|#|$)/i.test(url);
+  content.innerHTML = isPdf
+    ? `<iframe src="${escapeHtml(url)}"></iframe>`
+    : `<img src="${escapeHtml(url)}" alt="Certificate">`;
+  overlay.classList.add('active');
+}
+
+function closeCertModal(){
+  const overlay = document.getElementById('certModalOverlay');
+  const content = document.getElementById('certModalContent');
+  if(overlay) overlay.classList.remove('active');
+  if(content) content.innerHTML = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const closeBtn = document.getElementById('certModalClose');
+  const overlay = document.getElementById('certModalOverlay');
+  if(closeBtn) closeBtn.addEventListener('click', closeCertModal);
+  if(overlay) overlay.addEventListener('click', (e) => { if(e.target === overlay) closeCertModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeCertModal(); });
+});
 
 function renderPortfolio(data){
   // Nav + hero name
@@ -815,32 +899,16 @@ function renderPortfolio(data){
   if(certGrid){
     const list = (data.certifications || []);
     if(certSection) certSection.style.display = list.length ? "" : "none";
-    certGrid.innerHTML = list.map(c => `
-      <div class="card cert-card">
-        <div class="cert-icon">${escapeHtml(c.icon || "•")}</div>
-        <div>
-          <h3>${escapeHtml(c.title)}</h3>
-          <div class="meta">${escapeHtml(c.org || "")}</div>
-          <span class="status-pill ${c.status === 'done' ? 'status-done' : 'status-progress'}">${c.status === 'done' ? 'Completed' : 'In Progress'}</span>
-        </div>
-      </div>
-    `).join('');
+    certGrid.innerHTML = list.map(c => renderCertCard(c)).join('');
+    bindCertClicks(certGrid);
   }
 
   // Research certifications
   const rcGrid = document.getElementById('researchCertGrid');
   if(rcGrid){
     const list = (data.researchCertifications || []);
-    rcGrid.innerHTML = list.map(c => `
-      <div class="card cert-card">
-        <div class="cert-icon">${escapeHtml(c.icon || "•")}</div>
-        <div>
-          <h3>${escapeHtml(c.title)}</h3>
-          <div class="meta">${escapeHtml(c.org || "")}</div>
-          <span class="status-pill ${c.status === 'done' ? 'status-done' : 'status-progress'}">${c.status === 'done' ? 'Completed' : 'In Progress'}</span>
-        </div>
-      </div>
-    `).join('');
+    rcGrid.innerHTML = list.map(c => renderCertCard(c)).join('');
+    bindCertClicks(rcGrid);
   }
 
   // Achievements
