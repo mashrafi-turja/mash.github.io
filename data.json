@@ -3,101 +3,22 @@
   "heroNameLine1": "Mashrafi Tasnim",
   "heroNameLine2": "Turja",
   "tagline": "Project Manager specializing in large-scale tournament operations, team leadership, and technical delivery — with a research background in cybersecurity and machine learning.",
-  "heroPhoto": "/images/Passport Size.png",
+  "heroPhoto": "",
   "stats": [
-    {
-      "num": "6+",
-      "label": "Years of Experience"
-    },
-    {
-      "num": "7,000+",
-      "label": "Teams Managed Across Events"
-    },
-    {
-      "num": "10+",
-      "label": "Tournaments & LAN Events Led"
-    },
-    {
-      "num": "3",
-      "label": "Co-Authored Publications"
-    }
+    { "num": "6+", "label": "Years of Experience" },
+    { "num": "7,000+", "label": "Teams Managed Across Events" },
+    { "num": "10+", "label": "Tournaments & LAN Events Led" },
+    { "num": "3", "label": "Co-Authored Publications" }
   ],
   "certifications": [
-    {
-      "icon": "HP",
-      "title": "The What and How of Esports Management",
-      "org": "HP · edX",
-      "status": "progress"
-    },
-    {
-      "icon": "SS",
-      "title": "Social Skills Training Programme",
-      "org": "Daffodil International University",
-      "status": "done"
-    },
-    {
-      "icon": "HS",
-      "title": "How to Say No and How to Propose",
-      "org": "by Instructor Dr. Syed Mizanur Rahman, GoEdu",
-      "status": "done"
-    },
-    {
-      "icon": "KT",
-      "title": "Know Thyself – Get Selectively Better",
-      "org": "by Instructor Dr. Md. Sabur Khan, GoEdu",
-      "status": "done"
-    }
+    { "title": "The What and How of Esports Management", "org": "HP · edX", "status": "progress", "certificate": "" },
+    { "title": "Social Skills Training Programme", "org": "Daffodil International University", "status": "done", "certificate": "" }
   ],
   "researchCertifications": [],
   "achievements": [
-    {
-      "title": "Professional Handball Player",
-      "description": "Represented Mymensingh District Sports Association in professional-level handball competitions, building teamwork, discipline, and performance management skills.",
-      "date": "2016 — 2023"
-    },
-    {
-      "title": "Creative Team Manager, CDSTF",
-      "description": "Managed and coordinated creative team activities for the Community Digital Storytelling Festival, supporting project planning and execution.",
-      "date": "May 2024 — Dec 2024"
-    },
-    {
-      "title": "Graphic Designer, Draco Design",
-      "description": "Created graphic design materials and developed visual concepts for a sportswear brand using Adobe Illustrator and Photoshop.",
-      "date": "Oct 2024 — Aug 2025"
-    }
+    { "title": "Professional Handball Player", "description": "Represented Mymensingh District Sports Association in professional-level handball competitions, building teamwork, discipline, and performance management skills.", "date": "2016 — 2023" },
+    { "title": "Creative Team Manager, CDSTF", "description": "Managed and coordinated creative team activities for the Community Digital Storytelling Festival, supporting project planning and execution.", "date": "May 2024 — Dec 2024" },
+    { "title": "Graphic Designer, Draco Design", "description": "Created graphic design materials and developed visual concepts for a sportswear brand using Adobe Illustrator and Photoshop.", "date": "Oct 2024 — Aug 2025" }
   ],
-  "gallery": [
-    {
-      "image": "/images/FB_IMG_1789382084502.jpg",
-      "caption": "PMCC FALL 2026"
-    },
-    {
-      "image": "/images/FB_IMG_1789382119927.jpg",
-      "caption": "Bondhu Adda Season 1"
-    },
-    {
-      "image": "/images/FB_IMG_1789382127478.jpg",
-      "caption": ""
-    },
-    {
-      "image": "/images/FB_IMG_1789381915190.jpg",
-      "caption": "Bondhu Adda Season 2"
-    },
-    {
-      "image": "/images/FB_IMG_1789381917443.jpg",
-      "caption": "Bondhu Adda Season 2"
-    },
-    {
-      "image": "/images/FB_IMG_1789381948984.jpg",
-      "caption": "Bondhu Adda Season 2"
-    },
-    {
-      "image": "/images/FB_IMG_1789382405634.jpg",
-      "caption": "KH Legacy Cup"
-    },
-    {
-      "image": "/images/FB_IMG_1789382218252.jpg",
-      "caption": "KH Legacy Cup"
-    }
-  ]
+  "gallery": []
 }
